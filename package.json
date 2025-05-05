@@ -1,0 +1,17 @@
+{
+  "name": "tpf-backend",
+  "version": "0.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Rob Doneux",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.149",
+    "esbuild": "^0.25.3",
+    "typescript": "^5.8.3"
+  }
+}
