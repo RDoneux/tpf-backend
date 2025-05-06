@@ -10,4 +10,6 @@ await esbuild
     sourcemap: false,
     format: 'cjs',
     outdir: 'dist',
-  })
+    legalComments: 'none',
+  },
+)
