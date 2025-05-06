@@ -1,6 +1,12 @@
 import { DataSource } from 'typeorm'
 import { ExampleEntity } from '../entities/example.entity'
-import { Init1746541208075 } from './1746541208075-Init'
+import { PartyTable1746543493483 } from './1746543493483-party-table'
+import { HeroTable1746543904662 } from './1746543904662-hero-table'
+import { PartyHeroJoinTable1746543940852 } from './1746543940852-party-hero-join-table'
+import { PossessionTable1746545740723 } from './1746545740723-possession-table'
+import { PartyPossessionJoinTable1746545754133 } from './1746545754133-party-possession-join-table'
+import { GearTable1746545762188 } from './1746545762188-gear-table'
+import { PartyGearJoinTable1746545768956 } from './1746545768956-party-gear-join-table'
 
 // let dataSource: DataSource | null = null
 
@@ -45,9 +51,15 @@ export default new DataSource({
     database: process.env.DB_NAME,
     entities: [ExampleEntity],
     logging: ['query', 'error'],
-    synchronize: true,
-    dropSchema: true,
-    migrations: [Init1746541208075],
+    migrations: [
+        PartyTable1746543493483,
+        HeroTable1746543904662,
+        PartyHeroJoinTable1746543940852,
+        PossessionTable1746545740723,
+        PartyPossessionJoinTable1746545754133,
+        GearTable1746545762188,
+        PartyGearJoinTable1746545768956,
+    ],
     extra: {
         connectionTimeoutMillis: 30000,
     },

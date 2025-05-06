@@ -7,6 +7,7 @@ await esbuild.build({
     treeShaking: true,
     platform: 'node',
     sourcemap: false,
+    keepNames: true,
     format: 'cjs',
     outfile: 'dist/index.js',
     legalComments: 'none',
