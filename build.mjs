@@ -1,7 +1,6 @@
-import * as esbuild from 'esbuild';
+import * as esbuild from 'esbuild'
 
-await esbuild
-  .build({
+await esbuild.build({
     entryPoints: ['./src/index.ts'],
     bundle: true,
     minify: true,
@@ -11,5 +10,4 @@ await esbuild
     format: 'cjs',
     outdir: 'dist',
     legalComments: 'none',
-  },
-)
+})

@@ -1,5 +1,5 @@
 encryptionsalt: v1:ijB0ZZ0XqtY=:v1:KvpmidYsK0M4NbxR:TGEwq9iZGbpZvp+z7GFtK8dianZVxg==
 config:
-  aws:region: eu-west-2
-  tpf-backend-infra:projectname: character-sheet
-  tpf-backend-infra:servicename: infra-dev
+    aws:region: eu-west-2
+    tpf-backend-infra:projectname: character-sheet
+    tpf-backend-infra:servicename: infra-dev
