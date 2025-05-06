@@ -1,14 +1,3 @@
-import { exampleGet, examplePost } from './controllers/example.controller'
+import { partyRoutes } from './routes/party.routes'
 
-export const routes: any[] = [
-    {
-        method: 'GET',
-        path: '/test',
-        handler: exampleGet,
-    },
-    {
-        method: 'POST',
-        path: '/test',
-        handler: examplePost,
-    },
-]
+export const routes: any[] = [...partyRoutes]

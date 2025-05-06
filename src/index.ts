@@ -8,6 +8,7 @@ import httpHeaderNormalizerMiddleware from '@middy/http-header-normalizer'
 import httpPartialResponseMiddleware from '@middy/http-partial-response'
 import httpSecurityHeadersMiddleware from '@middy/http-security-headers'
 import httpUrlencodePathParametersParserMiddleware from '@middy/http-urlencode-path-parser'
+import httpResponseSerializerMiddleware from '@middy/http-response-serializer'
 import warmupMiddleware from '@middy/warmup'
 import httpRouterHandler from '@middy/http-router'
 import { routes } from './routes'
@@ -32,15 +33,15 @@ export const handler = middy()
     .use(httpSecurityHeadersMiddleware())
     .use(httpContentEncodingMiddleware())
     // .use(
-    //   httpResponseSerializerMiddleware({
-    //     serializers: [
-    //       {
-    //         regex: /^application\/json$/,
-    //         serializer: ({ body }) => JSON.stringify(body)
-    //       }
-    //     ],
-    //     default: 'application/json'
-    //   })
+    //     httpResponseSerializerMiddleware({
+    //         serializers: [
+    //             {
+    //                 regex: /^application\/json$/,
+    //                 serializer: ({ body }) => JSON.stringify(body),
+    //             },
+    //         ],
+    //         defaultContentType: 'application/json',
+    //     })
     // )
     .use(httpPartialResponseMiddleware())
     .use(httpErrorHandlerMiddleware())
