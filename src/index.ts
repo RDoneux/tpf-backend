@@ -11,11 +11,14 @@ import httpUrlencodePathParametersParserMiddleware from '@middy/http-urlencode-p
 import warmupMiddleware from '@middy/warmup'
 import httpRouterHandler from '@middy/http-router'
 import { routes } from './routes'
+import dataSourceObject from './persistance/data-source'
+import { dataSourceMiddleware } from './middleware/data-source'
 
 // .use(validatorMiddleware({ eventSchema, responseSchema }))
 // .use(httpJsonBodyParserMiddleware()) // IMPORTANT
 
 export const handler = middy()
+    .use(dataSourceMiddleware())
     .use(warmupMiddleware())
     .use(httpEventNormalizerMiddleware())
     .use(httpHeaderNormalizerMiddleware())

@@ -1,0 +1,5 @@
+node_modules
+coverage
+infra
+pipeline
+jest.config.ts

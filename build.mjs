@@ -8,6 +8,6 @@ await esbuild.build({
     platform: 'node',
     sourcemap: false,
     format: 'cjs',
-    outdir: 'dist',
+    outfile: 'dist/index.js',
     legalComments: 'none',
 })
