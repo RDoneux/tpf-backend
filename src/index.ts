@@ -8,11 +8,9 @@ import httpHeaderNormalizerMiddleware from '@middy/http-header-normalizer'
 import httpPartialResponseMiddleware from '@middy/http-partial-response'
 import httpSecurityHeadersMiddleware from '@middy/http-security-headers'
 import httpUrlencodePathParametersParserMiddleware from '@middy/http-urlencode-path-parser'
-import httpResponseSerializerMiddleware from '@middy/http-response-serializer'
 import warmupMiddleware from '@middy/warmup'
 import httpRouterHandler from '@middy/http-router'
 import { routes } from './routes'
-import dataSourceObject from './persistance/data-source'
 import { dataSourceMiddleware } from './middleware/data-source'
 
 // .use(validatorMiddleware({ eventSchema, responseSchema }))

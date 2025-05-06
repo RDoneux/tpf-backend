@@ -1,7 +1,9 @@
 import middy from '@middy/core'
 import { partyRepository } from '../repositories/party.repository'
 import { PartyEntity } from '../entities/party.entity'
-import { APIGatewayProxyEvent } from 'aws-lambda'
+import { Event } from '@middy/http-event-normalizer'
+import { plainToInstance } from 'class-transformer'
+import { validate } from 'class-validator'
 
 export const getAllParties = middy().handler(async () => {
     const parties: PartyEntity[] = await partyRepository.find()
@@ -12,9 +14,8 @@ export const getAllParties = middy().handler(async () => {
     }
 })
 
-export const getPartyById = middy().handler(async (event) => {
-    const partyId = (event as APIGatewayProxyEvent).pathParameters?.id
-    console.log('partyId', partyId)
+export const getPartyById = middy<Event>().handler(async (event: Event) => {
+    const partyId = event.pathParameters?.id
     const party: PartyEntity | null = await partyRepository.findOneBy({ id: partyId })
 
     if (!party) {
@@ -30,12 +31,62 @@ export const getPartyById = middy().handler(async (event) => {
     }
 })
 
-export const createParty = middy().handler(async (event) => {
-    const partyData = JSON.parse((event as APIGatewayProxyEvent).body || '{}')
-    const party: PartyEntity = await partyRepository.save(partyData)
+export const createParty = middy<Event>().handler(async (event: Event) => {
+    const party: PartyEntity = plainToInstance(PartyEntity, event.body)
+    const errors = await validate(party)
+
+    if (errors.length) {
+        return { statusCode: 400, body: { message: 'Validation failed', errors } }
+    }
+
+    const savedParty: PartyEntity = await partyRepository.save(party)
 
     return {
         statusCode: 201,
-        body: party,
+        body: savedParty,
+    }
+})
+
+export const updateParty = middy<Event>().handler(async (event: Event) => {
+    const partyId = event.pathParameters?.id
+    const party: PartyEntity | null = await partyRepository.findOneBy({ id: partyId })
+
+    if (!party) {
+        return {
+            statusCode: 404,
+            body: { message: 'Party not found' },
+        }
+    }
+
+    const errors = await validate(plainToInstance(PartyEntity, event.body))
+    if (errors.length) {
+        return { statusCode: 400, body: { message: 'Validation failed', errors } }
+    }
+
+    const partyToUpdate: PartyEntity = { ...party, ...plainToInstance(PartyEntity, event.body) }
+    const updatedParty: PartyEntity = await partyRepository.save(partyToUpdate)
+
+    return {
+        statusCode: 200,
+        body: updatedParty,
+    }
+})
+
+export const deleteParty = middy<Event>().handler(async (event: Event) => {
+    const partyId = event.pathParameters?.id
+    const party: PartyEntity | null = await partyRepository.findOneBy({ id: partyId })
+
+    if (!party) {
+        return {
+            statusCode: 404,
+            body: { message: 'Party not found' },
+        }
+    }
+
+    await partyRepository.remove(party)
+
+    return {
+        statusCode: 204,
+        body: null,
     }
 })
