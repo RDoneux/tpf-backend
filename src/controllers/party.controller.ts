@@ -58,7 +58,7 @@ export const updateParty = middy<Event>().handler(async (event: Event) => {
         }
     }
 
-    const errors = await validate(plainToInstance(PartyEntity, event.body))
+    const errors = await validate(plainToInstance(PartyEntity, JSON.parse(event.body ?? '{}')))
     if (errors.length) {
         return { statusCode: 400, body: { message: 'Validation failed', errors } }
     }
