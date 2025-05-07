@@ -32,7 +32,7 @@ export const getPartyById = middy<Event>().handler(async (event: Event) => {
 })
 
 export const createParty = middy<Event>().handler(async (event: Event) => {
-    const party: PartyEntity = plainToInstance(PartyEntity, event.body)
+    const party: PartyEntity = plainToInstance(PartyEntity, JSON.parse(event.body ?? '{}'))
     const errors = await validate(party)
 
     if (errors.length) {

@@ -30,17 +30,6 @@ export const handler = middy()
     .use(httpUrlencodePathParametersParserMiddleware())
     .use(httpSecurityHeadersMiddleware())
     .use(httpContentEncodingMiddleware())
-    // .use(
-    //     httpResponseSerializerMiddleware({
-    //         serializers: [
-    //             {
-    //                 regex: /^application\/json$/,
-    //                 serializer: ({ body }) => JSON.stringify(body),
-    //             },
-    //         ],
-    //         defaultContentType: 'application/json',
-    //     })
-    // )
     .use(httpPartialResponseMiddleware())
     .use(httpErrorHandlerMiddleware())
     .handler(httpRouterHandler(routes))
