@@ -63,7 +63,7 @@ export const updateParty = middy<Event>().handler(async (event: Event) => {
         return { statusCode: 400, body: { message: 'Validation failed', errors } }
     }
 
-    const partyToUpdate: PartyEntity = { ...party, ...plainToInstance(PartyEntity, event.body) }
+    const partyToUpdate: PartyEntity = { ...party, ...plainToInstance(PartyEntity, JSON.parse(event.body ?? '{}')) }
     const updatedParty: PartyEntity = await partyRepository.save(partyToUpdate)
 
     return {
