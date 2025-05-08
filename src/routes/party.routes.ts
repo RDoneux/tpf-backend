@@ -1,5 +1,12 @@
 import { Route } from '@middy/http-router'
-import { createParty, deleteParty, getAllParties, getPartyById, updateParty } from '../controllers/party.controller'
+import {
+    createParty,
+    deleteParty,
+    getAllParties,
+    getPartyById,
+    getPartyByKey,
+    updateParty,
+} from '../controllers/party.controller'
 import { APIGatewayProxyResult } from 'aws-lambda'
 import { Event } from '@middy/http-event-normalizer'
 
@@ -11,8 +18,8 @@ export const partyRoutes: Route<Event, APIGatewayProxyResult>[] = [
     },
     {
         method: 'GET',
-        path: '/party/{id}',
-        handler: getPartyById,
+        path: '/party/{key}',
+        handler: getPartyByKey,
     },
     {
         method: 'POST',

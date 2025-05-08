@@ -7,6 +7,7 @@ export class PartyTable1746543493483 implements MigrationInterface {
                 "id" UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
                 "name" VARCHAR(255) NOT NULL,
                 "description" VARCHAR(255) NOT NULL,
+                "party_key" VARCHAR(6) NOT NULL,
                 "copper" INTEGER NOT NULL DEFAULT 0,
                 "updated_at" TIMESTAMP DEFAULT NOW(),
                 "created_at" TIMESTAMP DEFAULT NOW()

@@ -12,6 +12,7 @@ import warmupMiddleware from '@middy/warmup'
 import httpRouterHandler from '@middy/http-router'
 import { routes } from './routes'
 import { dataSourceMiddleware } from './middleware/data-source'
+import { parseBodyMiddleware } from './middleware/parse-body'
 
 // .use(validatorMiddleware({ eventSchema, responseSchema }))
 // .use(httpJsonBodyParserMiddleware()) // IMPORTANT
@@ -27,9 +28,10 @@ export const handler = middy()
             availableMediaTypes: ['application/json'],
         })
     )
-    .use(httpUrlencodePathParametersParserMiddleware())
-    .use(httpSecurityHeadersMiddleware())
-    .use(httpContentEncodingMiddleware())
-    .use(httpPartialResponseMiddleware())
-    .use(httpErrorHandlerMiddleware())
+    // .use(httpUrlencodePathParametersParserMiddleware())
+    // .use(httpSecurityHeadersMiddleware())
+    // .use(httpContentEncodingMiddleware())
+    // .use(httpPartialResponseMiddleware())
+    // .use(httpErrorHandlerMiddleware())
+    .use(parseBodyMiddleware())
     .handler(httpRouterHandler(routes))

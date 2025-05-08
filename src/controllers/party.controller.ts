@@ -4,6 +4,8 @@ import { PartyEntity } from '../entities/party.entity'
 import { Event } from '@middy/http-event-normalizer'
 import { plainToInstance } from 'class-transformer'
 import { validate } from 'class-validator'
+import { generatePartyKey } from '../utils/party-key-generator'
+import { GearEntity } from '../entities/gear.entity'
 
 export const getAllParties = middy().handler(async () => {
     const parties: PartyEntity[] = await partyRepository.find()
@@ -31,8 +33,27 @@ export const getPartyById = middy<Event>().handler(async (event: Event) => {
     }
 })
 
+export const getPartyByKey = middy<Event>().handler(async (event: Event) => {
+    const partyKey = event.pathParameters?.key
+    const party: PartyEntity | null = await partyRepository.findOne({ where: { partyKey }, relations: ['gear'] })
+
+    if (!party) {
+        return {
+            statusCode: 404,
+            body: { message: 'Party not found' },
+        }
+    }
+
+    return {
+        statusCode: 200,
+        body: party,
+    }
+})
+
 export const createParty = middy<Event>().handler(async (event: Event) => {
-    const party: PartyEntity = plainToInstance(PartyEntity, JSON.parse(event.body ?? '{}'))
+    const party: PartyEntity = plainToInstance(PartyEntity, event.body)
+    party.partyKey = generatePartyKey()
+
     const errors = await validate(party)
 
     if (errors.length) {
@@ -43,7 +64,7 @@ export const createParty = middy<Event>().handler(async (event: Event) => {
 
     return {
         statusCode: 201,
-        body: savedParty,
+        body: savedParty.partyKey,
     }
 })
 
@@ -58,12 +79,12 @@ export const updateParty = middy<Event>().handler(async (event: Event) => {
         }
     }
 
-    const errors = await validate(plainToInstance(PartyEntity, JSON.parse(event.body ?? '{}')))
+    const errors = await validate(plainToInstance(PartyEntity, event.body))
     if (errors.length) {
         return { statusCode: 400, body: { message: 'Validation failed', errors } }
     }
 
-    const partyToUpdate: PartyEntity = { ...party, ...plainToInstance(PartyEntity, JSON.parse(event.body ?? '{}')) }
+    const partyToUpdate: PartyEntity = { ...party, ...plainToInstance(PartyEntity, event.body) }
     const updatedParty: PartyEntity = await partyRepository.save(partyToUpdate)
 
     return {

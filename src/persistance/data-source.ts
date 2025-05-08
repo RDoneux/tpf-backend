@@ -7,6 +7,7 @@ import { PartyPossessionJoinTable1746545754133 } from './1746545754133-party-pos
 import { GearTable1746545762188 } from './1746545762188-gear-table'
 import { PartyGearJoinTable1746545768956 } from './1746545768956-party-gear-join-table'
 import { PartyEntity } from '../entities/party.entity'
+import { GearEntity } from '../entities/gear.entity'
 
 export default new DataSource({
     type: 'postgres',
@@ -15,7 +16,7 @@ export default new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [PartyEntity],
+    entities: [PartyEntity, GearEntity],
     logging: ['query', 'error'],
     migrations: [
         PartyTable1746543493483,

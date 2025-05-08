@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { GearEntity } from './gear.entity'
 
 @Entity('party')
 export class PartyEntity {
@@ -20,6 +21,25 @@ export class PartyEntity {
     @IsOptional()
     @IsNumber()
     copper!: number
+
+    @Column({ name: 'party_key', type: 'varchar', length: 6, unique: true })
+    @IsNotEmpty()
+    @IsString()
+    partyKey!: string
+
+    @ManyToMany(() => GearEntity, (gear) => gear.parties)
+    @JoinTable({
+        name: 'party_gear',
+        joinColumn: {
+            name: 'party_id',
+            referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+            name: 'gear_id',
+            referencedColumnName: 'id',
+        },
+    })
+    gear!: GearEntity[]
 
     @Column({ type: 'timestamp', name: 'created_at' })
     createdAt!: Date
