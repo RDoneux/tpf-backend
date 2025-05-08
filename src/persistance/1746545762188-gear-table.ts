@@ -6,7 +6,7 @@ export class GearTable1746545762188 implements MigrationInterface {
             CREATE TABLE IF NOT EXISTS "gear" (
                 "id" UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
                 "name" VARCHAR(255) NOT NULL,
-                "description" VARCHAR(255) NOT NULL,
+                "description" VARCHAR(255),
                 "quantity" INTEGER NOT NULL DEFAULT 0,
                 "weight" INTEGER NOT NULL DEFAULT 0,
                 "special_properties" VARCHAR(255) NOT NULL DEFAULT '',

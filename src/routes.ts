@@ -1,6 +1,7 @@
 import { Route } from '@middy/http-router'
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
+import { APIGatewayProxyResult } from 'aws-lambda'
 import { partyRoutes } from './routes/party.routes'
 import { Event } from '@middy/http-event-normalizer'
+import { gearRoutes } from './routes/gear.routes'
 
-export const routes: Route<Event, APIGatewayProxyResult>[] = [...partyRoutes]
+export const routes: Route<Event, APIGatewayProxyResult>[] = [...partyRoutes, ...gearRoutes]

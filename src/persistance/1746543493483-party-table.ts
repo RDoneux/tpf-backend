@@ -6,7 +6,7 @@ export class PartyTable1746543493483 implements MigrationInterface {
             CREATE TABLE IF NOT EXISTS "party" (
                 "id" UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
                 "name" VARCHAR(255) NOT NULL,
-                "description" VARCHAR(255) NOT NULL,
+                "description" VARCHAR(255),
                 "party_key" VARCHAR(6) NOT NULL,
                 "copper" INTEGER NOT NULL DEFAULT 0,
                 "updated_at" TIMESTAMP DEFAULT NOW(),

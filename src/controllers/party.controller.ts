@@ -5,7 +5,6 @@ import { Event } from '@middy/http-event-normalizer'
 import { plainToInstance } from 'class-transformer'
 import { validate } from 'class-validator'
 import { generatePartyKey } from '../utils/party-key-generator'
-import { GearEntity } from '../entities/gear.entity'
 
 export const getAllParties = middy().handler(async () => {
     const parties: PartyEntity[] = await partyRepository.find()
@@ -35,7 +34,10 @@ export const getPartyById = middy<Event>().handler(async (event: Event) => {
 
 export const getPartyByKey = middy<Event>().handler(async (event: Event) => {
     const partyKey = event.pathParameters?.key
-    const party: PartyEntity | null = await partyRepository.findOne({ where: { partyKey }, relations: ['gear'] })
+    const party: PartyEntity | null = await partyRepository.findOne({
+        where: { partyKey },
+        relations: ['gear', 'possessions'],
+    })
 
     if (!party) {
         return {
