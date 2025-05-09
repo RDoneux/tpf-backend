@@ -57,3 +57,36 @@ export const createGearOnParty = middy<Event>().handler(async (event: Event) => 
         body: party,
     }
 })
+
+export const deleteGearOnParty = middy<Event>().handler(async (event: Event) => {
+    const partyId = event.pathParameters?.id
+    const gearId = event.pathParameters?.gearId
+
+    const party: PartyEntity | null = await partyRepository.findOne({ where: { id: partyId }, relations: ['gear'] })
+
+    if (!party) {
+        return {
+            statusCode: 404,
+            body: { message: 'Party not found' },
+        }
+    }
+
+    const gearToDelete = party.gear.find((gear) => gear.id === gearId)
+
+    if (!gearToDelete) {
+        return {
+            statusCode: 404,
+            body: { message: 'Gear not found in this party' },
+        }
+    }
+
+    await gearRepository.remove(gearToDelete)
+    party.gear = party.gear.filter((gear) => gear.id !== gearId)
+
+    await partyRepository.save(party)
+
+    return {
+        statusCode: 204,
+        body: null,
+    }
+})

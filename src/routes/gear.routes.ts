@@ -1,7 +1,7 @@
 import { Route } from '@middy/http-router'
 import { APIGatewayProxyResult } from 'aws-lambda'
 import { Event } from '@middy/http-event-normalizer'
-import { createGearOnParty, getGearByPartyId } from '../controllers/gear.controller'
+import { createGearOnParty, deleteGearOnParty, getGearByPartyId } from '../controllers/gear.controller'
 
 export const gearRoutes: Route<Event, APIGatewayProxyResult>[] = [
     {
@@ -13,5 +13,10 @@ export const gearRoutes: Route<Event, APIGatewayProxyResult>[] = [
         method: 'POST',
         path: '/party/{id}/gear',
         handler: createGearOnParty,
+    },
+    {
+        method: 'DELETE',
+        path: '/party/{id}/gear/{gearId}',
+        handler: deleteGearOnParty,
     },
 ]

@@ -60,3 +60,40 @@ export const createPossessionOnParty = middy<Event>().handler(async (event: Even
         body: party,
     }
 })
+
+export const deletePossessionOnParty = middy<Event>().handler(async (event: Event) => {
+    const partyId = event.pathParameters?.id
+    const possessionId = event.pathParameters?.possessionId
+
+    const party: PartyEntity | null = await partyRepository.findOne({
+        where: { id: partyId },
+        relations: ['possessions'],
+    })
+
+    if (!party) {
+        return {
+            statusCode: 404,
+            body: { message: 'Party not found' },
+        }
+    }
+
+    const possessionToDelete = party.possessions.find((possession) => possession.id === possessionId)
+
+    if (!possessionToDelete) {
+        return {
+            statusCode: 404,
+            body: { message: 'Possession not found' },
+        }
+    }
+
+    await possessionRepository.remove(possessionToDelete)
+
+    party.possessions = party.possessions.filter((possession) => possession.id !== possessionId)
+
+    await partyRepository.save(party)
+
+    return {
+        statusCode: 204,
+        body: null,
+    }
+})
