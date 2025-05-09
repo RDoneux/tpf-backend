@@ -11,7 +11,7 @@ export const gearRoutes: Route<Event, APIGatewayProxyResult>[] = [
     },
     {
         method: 'POST',
-        path: '/party/{id}',
+        path: '/party/{id}/gear',
         handler: createGearOnParty,
     },
 ]

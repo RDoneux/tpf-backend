@@ -6,7 +6,7 @@ export class PossessionTable1746545740723 implements MigrationInterface {
             CREATE TABLE IF NOT EXISTS "possession" (
                 "id" UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
                 "name" VARCHAR(255) NOT NULL,
-                "description" VARCHAR(255) NOT NULL,
+                "description" VARCHAR(255),
                 "quantity" INTEGER NOT NULL DEFAULT 0,
                 "weight" INTEGER NOT NULL DEFAULT 0,
                 "value" INTEGER NOT NULL DEFAULT 0,

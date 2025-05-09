@@ -36,7 +36,7 @@ export const getPartyByKey = middy<Event>().handler(async (event: Event) => {
     const partyKey = event.pathParameters?.key
     const party: PartyEntity | null = await partyRepository.findOne({
         where: { partyKey },
-        relations: ['gear', 'possessions'],
+        // relations: ['gear', 'possessions'],
     })
 
     if (!party) {

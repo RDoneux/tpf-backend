@@ -14,7 +14,7 @@ export class PossessionEntity {
 
     @Column({ type: 'varchar', length: 255, nullable: true })
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     description!: string
 
     @Column({ type: 'integer', nullable: true })

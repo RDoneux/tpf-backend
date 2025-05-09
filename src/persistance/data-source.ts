@@ -11,6 +11,8 @@ import { GearEntity } from '../entities/gear.entity'
 import { PossessionEntity } from '../entities/possession.entity'
 import { PartyGearView1746737217909 } from './1746737217909-party-gear-view'
 import { PartyGearViewEntity } from '../entities/party-gear-view.entity'
+import { PartyPosessionView1746774580361 } from './1746774580361-party-posession-view'
+import { PartyPossessionViewEntity } from '../entities/party-possession-view.entity'
 
 export default new DataSource({
     type: 'postgres',
@@ -19,7 +21,7 @@ export default new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [PartyEntity, GearEntity, PossessionEntity, PartyGearViewEntity],
+    entities: [PartyEntity, GearEntity, PossessionEntity, PartyGearViewEntity, PartyPossessionViewEntity],
     logging: ['query', 'error'],
     migrations: [
         PartyTable1746543493483,
@@ -30,6 +32,7 @@ export default new DataSource({
         GearTable1746545762188,
         PartyGearJoinTable1746545768956,
         PartyGearView1746737217909,
+        PartyPosessionView1746774580361,
     ],
     extra: {
         max: 10,
