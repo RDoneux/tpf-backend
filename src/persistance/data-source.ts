@@ -32,6 +32,8 @@ export default new DataSource({
         PartyGearView1746737217909,
     ],
     extra: {
+        max: 10,
         connectionTimeoutMillis: 30000,
+        idleTimeoutMillis: 30000,
     },
 })
