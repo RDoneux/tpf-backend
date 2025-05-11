@@ -113,3 +113,35 @@ export const deleteParty = middy<Event>().handler(async (event: Event) => {
         body: null,
     }
 })
+
+export const updatePartyMoney = middy<Event>().handler(async (event: Event) => {
+    const partyId = event.pathParameters?.id
+    const party: PartyEntity | null = await partyRepository.findOneBy({ id: partyId })
+
+    if (!party) {
+        return {
+            statusCode: 404,
+            body: { message: 'Party not found' },
+        }
+    }
+
+    console.log((event.body as any).money)
+    const money = (event.body as any).money
+
+    if (!money) {
+        return {
+            statusCode: 400,
+            body: { message: 'Money not provided' },
+        }
+    }
+
+    console.log(money)
+    party.copper = +money
+
+    const updatedParty: PartyEntity = await partyRepository.save(party)
+
+    return {
+        statusCode: 200,
+        body: updatedParty,
+    }
+})
