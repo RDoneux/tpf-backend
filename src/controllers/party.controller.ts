@@ -66,7 +66,7 @@ export const createParty = middy<Event>().handler(async (event: Event) => {
 
     return {
         statusCode: 201,
-        body: savedParty.partyKey,
+        body: { key: savedParty.partyKey },
     }
 })
 

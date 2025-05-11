@@ -8,6 +8,7 @@ import httpRouterHandler from '@middy/http-router'
 import { routes } from './routes'
 import { dataSourceMiddleware } from './middleware/data-source'
 import { parseBodyMiddleware } from './middleware/parse-body'
+import { stringifyResponseMiddleware } from './middleware/stringify-response'
 
 // .use(validatorMiddleware({ eventSchema, responseSchema }))
 // .use(httpJsonBodyParserMiddleware()) // IMPORTANT
@@ -24,4 +25,5 @@ export const handler = middy()
         })
     )
     .use(parseBodyMiddleware())
+    .use(stringifyResponseMiddleware())
     .handler(httpRouterHandler(routes))

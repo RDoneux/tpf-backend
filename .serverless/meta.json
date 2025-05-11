@@ -1,0 +1,137 @@
+{
+    "/home/rdoneux/code/tpf-character-sheet-project/tpf-backend/serverless.yml": {
+        "versionFramework": "4.14.3",
+        "servicePath": "/home/rdoneux/code/tpf-character-sheet-project/tpf-backend/serverless.yml",
+        "serviceConfigFileName": "serverless.yml",
+        "service": {
+            "service": "tpf-backend",
+            "frameworkVersion": "4",
+            "provider": {
+                "name": "aws",
+                "runtime": "nodejs18.x",
+                "region": "eu-west-2",
+                "environment": {
+                    "NODE_ENV": "development"
+                }
+            },
+            "functions": {
+                "app": {
+                    "handler": "dist/index.handler",
+                    "events": [
+                        {
+                            "http": {
+                                "path": "/",
+                                "method": "any"
+                            }
+                        },
+                        {
+                            "http": {
+                                "path": "/{proxy+}",
+                                "method": "any"
+                            }
+                        }
+                    ]
+                }
+            },
+            "plugins": ["serverless-offline"],
+            "custom": {
+                "serverless-offline": {
+                    "httpPort": 3000,
+                    "host": "0.0.0.0"
+                }
+            }
+        },
+        "provider": {
+            "name": "aws",
+            "runtime": "nodejs18.x",
+            "region": "eu-west-2",
+            "environment": {
+                "NODE_ENV": "development"
+            }
+        },
+        "serviceRawFile": "service: tpf-backend\n\nframeworkVersion: '4'\n\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  region: eu-west-2\n  environment:\n    NODE_ENV: development\n\nfunctions:\n  app:\n    handler: dist/index.handler\n    events:\n      - http:\n          path: /\n          method: any\n      - http:\n          path: /{proxy+}\n          method: any\n\nplugins:\n  - serverless-offline\n\ncustom:\n  serverless-offline:\n    httpPort: 3000\n    host: 0.0.0.0",
+        "command": [],
+        "options": {
+            "template": "aws-nodejs",
+            "path": true
+        },
+        "serviceProviderAwsCfStackId": null,
+        "serviceProviderAwsCfStackCreated": null,
+        "serviceProviderAwsCfStackUpdated": null,
+        "serviceProviderAwsCfStackStatus": null,
+        "serviceProviderAwsCfStackOutputs": null
+    },
+    "/var/task/serverless.yml": {
+        "versionFramework": "4.14.3",
+        "servicePath": "/var/task/serverless.yml",
+        "serviceConfigFileName": "serverless.yml",
+        "service": {
+            "org": "doneuxservices",
+            "service": "tpf-backend",
+            "provider": {
+                "name": "aws",
+                "runtime": "nodejs18.x",
+                "region": "eu-west-2",
+                "environment": {
+                    "DB_HOST": "${env:DB_HOST}",
+                    "DB_PORT": "${env:DB_PORT}",
+                    "DB_NAME": "${env:DB_NAME}",
+                    "DB_USER": "${env:DB_USER}",
+                    "DB_PASSWORD": "<REDACTED>"
+                }
+            },
+            "functions": {
+                "app": {
+                    "handler": "dist/index.handler",
+                    "events": [
+                        {
+                            "http": {
+                                "path": "/",
+                                "method": "any"
+                            }
+                        },
+                        {
+                            "http": {
+                                "path": "/{proxy+}",
+                                "method": "any"
+                            }
+                        }
+                    ]
+                }
+            },
+            "plugins": ["serverless-offline"],
+            "custom": {
+                "serverless-offline": {
+                    "httpPort": 3000,
+                    "host": "0.0.0.0"
+                }
+            }
+        },
+        "provider": {
+            "name": "aws",
+            "runtime": "nodejs18.x",
+            "region": "eu-west-2",
+            "environment": {
+                "DB_HOST": "${env:DB_HOST}",
+                "DB_PORT": "${env:DB_PORT}",
+                "DB_NAME": "${env:DB_NAME}",
+                "DB_USER": "${env:DB_USER}",
+                "DB_PASSWORD": "<REDACTED>"
+            }
+        },
+        "error": {
+            "message": "You must sign in or use a license key with Serverless Framework V.4 and later versions. Please use \"serverless login\".",
+            "stack": "Error: You must sign in or use a license key with Serverless Framework V.4 and later versions. Please use \"serverless login\".\n    at Authentication.getAuthenticatedData (file:///root/.serverless/releases/4.14.3/package/dist/sf-core.js:692:10892)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Authentication.authenticate (file:///root/.serverless/releases/4.14.3/package/dist/sf-core.js:694:21808)\n    at async TraditionalRunner.resolveVariablesAndAuthenticate (file:///root/.serverless/releases/4.14.3/package/dist/sf-core.js:698:2377)\n    at async TraditionalRunner.run (file:///root/.serverless/releases/4.14.3/package/dist/sf-core.js:1271:27896)\n    at async route (file:///root/.serverless/releases/4.14.3/package/dist/sf-core.js:1302:2779)\n    at async Object.run (file:///root/.serverless/releases/4.14.3/package/dist/sf-core.js:1303:3661)\n    at async run2 (file:///root/.serverless/releases/4.14.3/package/dist/sf-core.js:1303:4815)"
+        },
+        "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\norg: doneuxservices\nservice: tpf-backend\n\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  region: eu-west-2\n  environment:\n    DB_HOST: ${env:DB_HOST}\n    DB_PORT: ${env:DB_PORT}\n    DB_NAME: ${env:DB_NAME}\n    DB_USER: ${env:DB_USER}\n    DB_PASSWORD: ${env:DB_PASSWORD}\n\nfunctions:\n  app:\n    handler: dist/index.handler\n    events:\n      - http:\n          path: /\n          method: any\n      - http:\n          path: /{proxy+}\n          method: any\n\nplugins:\n  - serverless-offline\n\ncustom:\n  serverless-offline:\n    httpPort: 3000\n    host: 0.0.0.0",
+        "command": ["offline"],
+        "options": {
+            "host": "0.0.0.0"
+        },
+        "serviceProviderAwsCfStackId": null,
+        "serviceProviderAwsCfStackCreated": null,
+        "serviceProviderAwsCfStackUpdated": null,
+        "serviceProviderAwsCfStackStatus": null,
+        "serviceProviderAwsCfStackOutputs": null
+    }
+}

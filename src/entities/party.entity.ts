@@ -24,7 +24,7 @@ export class PartyEntity {
     copper!: number
 
     @Column({ name: 'party_key', type: 'varchar', length: 6, unique: true })
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     partyKey!: string
 
